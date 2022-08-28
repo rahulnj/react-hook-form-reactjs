@@ -1,40 +1,65 @@
 import { useState } from 'react'
+import { useFieldArray, useForm } from 'react-hook-form'
 
 const App = () => {
   const [data, setData] = useState([
     {
-      code: 1,
+      remark: 1,
       type: 'mobile',
       value: '1234567890',
     },
     {
-      code: 1,
+      remark: 2,
       type: 'phone',
       value: '0987654321',
     },
     {
-      code: 1,
+      remark: 3,
       type: 'email',
       value: 'someone@gmail.com',
     },
   ])
+  const {
+    register,
+    handleSubmit,
+    watch,
+    control,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      data: data,
+    },
+  })
 
+  const onSubmit = (data) => {
+    console.log(data)
+  }
+
+  const { fields, prepend, append } = useFieldArray({ name: 'data', control })
+  console.log(fields)
   return (
-    <form className='container'>
-      <div className='app'>
-        <div className='fieldWrapper'>
-          <label htmlFor='type'>Type</label>
-          <input type='text' readOnly />
+    <form className='container' onSubmit={handleSubmit(onSubmit)}>
+      {fields.map((data, index) => (
+        <div className='app' key={index}>
+          <div className='fieldWrapper'>
+            <label htmlFor='type'>Type</label>
+            <input value={data?.type} type='text' readOnly />
+          </div>
+          <div className='fieldWrapper'>
+            <label htmlFor='value'>Value</label>
+            <input {...register(`${data.type}`)} type='text' />
+          </div>
+          <div className='fieldWrapper'>
+            <label htmlFor='remark'>Remark</label>
+            <input
+              {...register('data.remark')}
+              type='text'
+              value={'none'}
+              readOnly
+            />
+          </div>
         </div>
-        <div className='fieldWrapper'>
-          <label htmlFor='value'>Value</label>
-          <input type='text' />
-        </div>
-        <div className='fieldWrapper'>
-          <label htmlFor='remark'>Remark</label>
-          <input type='text' value={'none'} readOnly />
-        </div>
-      </div>
+      ))}
       <div className='fieldWrapper'>
         <button type='submit'>Edit</button>
       </div>
