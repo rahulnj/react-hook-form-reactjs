@@ -47,16 +47,16 @@ const App = () => {
           </div>
           <div className='fieldWrapper'>
             <label htmlFor='value'>Value</label>
-            <input {...register(`${data.type}`)} type='text' />
+            <input
+              name={data?.type}
+              {...register(`${data.type}`)}
+              value={data?.value}
+              type='text'
+            />
           </div>
           <div className='fieldWrapper'>
             <label htmlFor='remark'>Remark</label>
-            <input
-              {...register('data.remark')}
-              type='text'
-              value={'none'}
-              readOnly
-            />
+            <input type='text' value={'none'} readOnly />
           </div>
         </div>
       ))}
