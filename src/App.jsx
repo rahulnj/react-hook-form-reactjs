@@ -50,7 +50,7 @@ const App = () => {
             <input
               name={data?.type}
               {...register(`${data.type}`)}
-              value={data?.value}
+              defaultValue={data?.value}
               type='text'
             />
           </div>
