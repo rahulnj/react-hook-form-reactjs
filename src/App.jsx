@@ -36,7 +36,7 @@ const App = () => {
   }
 
   const { fields, prepend, append } = useFieldArray({ name: 'data', control })
-  console.log(fields)
+
   return (
     <form className='container' onSubmit={handleSubmit(onSubmit)}>
       {fields.map((data, index) => (
